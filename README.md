@@ -1,5 +1,9 @@
 # nlp-text-analytics
 
+**What:** A classical and a neural method side by side on language detection and movie title search.  
+**Result:** Naive Bayes on character n-grams got 75.7% on single words vs. 60.0% for stop-word counting; n-grams handle typos, embeddings handle meaning.  
+**Stack:** Python, NLTK, sentence-transformers, pandas
+
 Four small text experiments in one notebook (`nlp_text_analytics.ipynb`): language detection
 with stop words and with Naive Bayes, and movie title search with character n-grams and with
 sentence transformers.
