@@ -23,27 +23,21 @@ and see where each one breaks, instead of assuming the neural model is always be
 
 ## Results
 
-Title search, top result:
-
-| query | n-grams | sentence transformer (MiniLM) |
-|---|---|---|
-| "the dark night" | The Dark Knight | Night on Earth |
-| "shawshenk" | The Shawshank Redemption | Zwartboek |
-| "toys that come alive" | All That Jazz | Toy Story |
-| "space adventure" | The Adventures of Robin Hood | Star Trek |
+For title search I compared the top result of both methods. With the typo "shawshenk",
+n-grams find The Shawshank Redemption while the embedding model returns Zwartboek, and for
+"the dark night" n-grams find The Dark Knight while embeddings return Night on Earth. It goes
+the other way when the query is about meaning: "toys that come alive" gives Toy Story with
+embeddings but All That Jazz with n-grams, and "space adventure" gives Star Trek vs. The
+Adventures of Robin Hood.
 
 n-grams handle typos, embeddings handle meaning. The two fail in opposite cases. The embedding
 model reads "night" as night, so it looks for night films and never gets to The Dark Knight.
 
-Language detection, accuracy on 1500 held-out European Parliament sentences (300 per
-language), also cut to their first words:
-
-| text length | stop words | Naive Bayes |
-|---|---|---|
-| 1 word | 60.0% | 75.7% |
-| 3 words | 81.3% | 94.5% |
-| 6 words | 93.3% | 98.9% |
-| full sentence | 99.7% | 100.0% |
+For language detection I used 1500 held-out European Parliament sentences (300 per
+language), and also cut them down to their first words. With full sentences both methods are
+almost perfect (99.7% for stop words, 100% for Naive Bayes). The difference shows on short
+texts: with a single word, stop-word counting gets 60.0% and Naive Bayes 75.7%, with three
+words 81.3% vs. 94.5%, and with six words 93.3% vs. 98.9%.
 
 On short texts there are often no stop words at all, so the stop word method has nothing to
 count. When all languages get 0 hits it falls back to the first language (English), which
